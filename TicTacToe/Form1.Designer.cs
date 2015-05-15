@@ -39,7 +39,8 @@
             this.twoTwo = new System.Windows.Forms.PictureBox();
             this.resultLabel = new System.Windows.Forms.Label();
             this.restartButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.zeroZero)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oneZero)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.twoZero)).BeginInit();
@@ -160,21 +161,31 @@
             this.restartButton.UseVisualStyleBackColor = true;
             this.restartButton.Click += new System.EventHandler(this.restartButton_Click);
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(179, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 26);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Player 1: O\r\nPlayer 2: X";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 176);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "YOU: 0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(109, 176);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "COMPUTER: X";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.resultLabel);
             this.Controls.Add(this.twoTwo);
@@ -216,7 +227,8 @@
         private System.Windows.Forms.PictureBox twoTwo;
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Button restartButton;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -12,8 +12,9 @@ namespace TicTacToe
         public List<Square> SquareList { get; set; }
         public bool PlayerWins { get; set; }
 
-        public Player()
+        public Player(string name)
         {
+            this.Name = name;
             this.SquareList = new List<Square>();
         }
     }

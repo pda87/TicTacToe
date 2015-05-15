@@ -20,10 +20,8 @@ namespace TicTacToe
         {
             this.playerTurn = false;
             this.GameOver = false;
-            this.Player1 = new Player();
-            this.Player1.Name = "Player 1";
-            this.Player2 = new Player();
-            this.Player2.Name = "Player 2";
+            this.Player1 = new Player("You");
+            this.Player2 = new Player("Computer");
         }
 
         public void playGame()
@@ -36,6 +34,7 @@ namespace TicTacToe
                 checkHorizontalLine(this.Player1);
                 checkHorizontalLine(this.Player2);
 
+                
                 if (this.Player1.PlayerWins && this.Player2.PlayerWins)
                 {
                     ResultString = "Draw...";
@@ -45,7 +44,12 @@ namespace TicTacToe
                 {
                     ResultString = "Nobody wins...";
                 }
-
+                
+                if (this.ResultString.Contains("You"))
+                {
+                    this.ResultString = "You win!";
+                }
+                return;
             }
 
             if (this.playerTurn)
@@ -67,8 +71,8 @@ namespace TicTacToe
                 if (player.SquareList.Count(square => square.xCoordinate.Equals(i)) == 3)
                 {
                     List<Square> equalXCoordinates = (from square in player.SquareList
-                                                     where square.xCoordinate.Equals(i)
-                                                     select square).OrderByDescending(square => square.yCoordinate).ToList();
+                                                      where square.xCoordinate.Equals(i)
+                                                      select square).OrderByDescending(square => square.yCoordinate).ToList();
 
                     if (equalXCoordinates[0].yCoordinate == 2 && equalXCoordinates[1].yCoordinate == 1 && equalXCoordinates[2].yCoordinate == 0)
                     {
@@ -98,8 +102,6 @@ namespace TicTacToe
                     }
                 }
             }
-
-
         }
     }
 }

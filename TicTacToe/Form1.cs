@@ -34,53 +34,52 @@ namespace TicTacToe
             aiTurn();
         }
 
-
         private void zeroZero_Click(object sender, EventArgs e)
         {
-            displayTurn(zeroZero, @"Logos/oO.png", 0, 0, 0);
+            displayTurn(zeroZero, 0, 0, 0);
         }
 
         private void oneZero_Click(object sender, EventArgs e)
         {
-            displayTurn(oneZero, @"Logos/oO.png", 1, 1, 0);
+            displayTurn(oneZero, 1, 1, 0);
         }
 
         private void twoZero_Click(object sender, EventArgs e)
         {
-            displayTurn(twoZero, @"Logos/oO.png", 2, 2, 0);
+            displayTurn(twoZero, 2, 2, 0);
         }
 
         private void zeroOne_Click(object sender, EventArgs e)
         {
-            displayTurn(zeroOne, @"Logos/oO.png", 3, 0, 1);
+            displayTurn(zeroOne, 3, 0, 1);
         }
 
         private void oneOne_Click(object sender, EventArgs e)
         {
-            displayTurn(oneOne, @"Logos/oO.png", 4, 1, 1);
+            displayTurn(oneOne, 4, 1, 1);
         }
 
         private void twoOne_Click(object sender, EventArgs e)
         {
-            displayTurn(twoOne, @"Logos/oO.png", 5, 2, 1);
+            displayTurn(twoOne, 5, 2, 1);
         }
 
         private void zeroTwo_Click(object sender, EventArgs e)
         {
-            displayTurn(zeroTwo, @"Logos/oO.png", 6, 0, 2);
+            displayTurn(zeroTwo, 6, 0, 2);
         }
 
         private void oneTwo_Click(object sender, EventArgs e)
         {
-            displayTurn(oneTwo, @"Logos/oO.png", 7, 1, 2);
+            displayTurn(oneTwo, 7, 1, 2);
         }
 
         private void twoTwo_Click(object sender, EventArgs e)
         {
-            displayTurn(twoTwo, @"Logos/oO.png", 8, 2, 2);
+            displayTurn(twoTwo, 8, 2, 2);
         }
 
-        private void displayTurn(PictureBox pictureBox, string imageLocation, int pbClicked, int xCoordinate, int yCoordinate)
+        private void displayTurn(PictureBox pictureBox, int pbClicked, int xCoordinate, int yCoordinate)
         {
             resultLabel.Text = "";
 
@@ -91,65 +90,83 @@ namespace TicTacToe
                 return;
             }
 
-            if (!game.GameOver)
+            else
             {
-                if (!intList.Contains(pbClicked))
+                if (!game.GameOver)
                 {
                     intList.Add(pbClicked);
 
                     game.Player1.SquareList.Add(new Square(PlayerInformation.Player1) { xCoordinate = xCoordinate, yCoordinate = yCoordinate });
 
-                    pictureBox.ImageLocation = imageLocation;
+                    pictureBox.ImageLocation = @"Logos/oO.png";
                     pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-                    pictureBox.Refresh();
+                    refreshPictureBoxes();
                 }
-
+                
                 aiTurn();
+                checkEndGame();
             }
         }
 
         private void aiTurn()
         {
-            if (intList.Count <= 8)
+            if (game.Player1.SquareList.Count() + game.Player2.SquareList.Count() < 9)
             {
                 Random random = new Random();
                 game.Box = random.Next(0, 8);
 
                 if (intList.Contains(game.Box))
                 {
+
                     for (int i = 0; i < 8; i++)
                     {
                         if (!intList.Contains(i))
                         {
                             game.Box = i;
+                            displayAITurn();
                             break;
                         }
 
+                        else
+                        {
+                            continue;
+                        }
                     }
-                    intList.Add(game.Box);
-                    int[] coordinates = getCoordinates();
-                    game.Player2.SquareList.Add(new Square(PlayerInformation.Player2) { xCoordinate = coordinates[0], yCoordinate = coordinates[1] });
-                    pictureBoxList[game.Box].ImageLocation = @"Logos/xX.png";
-                    pictureBoxList[game.Box].SizeMode = PictureBoxSizeMode.AutoSize;
-                    pictureBoxList[game.Box].Refresh();
-                    game.playGame();
                 }
 
                 else
                 {
-                    intList.Add(game.Box);
-                    int[] coordinates = getCoordinates();
-                    game.Player2.SquareList.Add(new Square(PlayerInformation.Player2) { xCoordinate = coordinates[0], yCoordinate = coordinates[1] });
-                    pictureBoxList[game.Box].ImageLocation = @"Logos/xX.png";
-                    pictureBoxList[game.Box].SizeMode = PictureBoxSizeMode.AutoSize;
-                    pictureBoxList[game.Box].Refresh();
-                    game.playGame();
+                    displayAITurn();
                 }
 
+                refreshPictureBoxes();
+                game.playGame();
             }
-            if (game.Player1.SquareList.Count() + game.Player2.SquareList.Count == 9)
-            
+
+            refreshPictureBoxes();
+            checkEndGame();
+        }
+
+        private void displayAITurn()
+        {
+            intList.Add(game.Box);
+            int[] coordinates = getCoordinates();
+            game.Player2.SquareList.Add(new Square(PlayerInformation.Player2) { xCoordinate = coordinates[0], yCoordinate = coordinates[1] });
+            pictureBoxList[game.Box].ImageLocation = @"Logos/xX.png";
+            pictureBoxList[game.Box].SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBoxList[game.Box].Refresh();
+        }
+
+        private void refreshPictureBoxes()
+        {
+            pictureBoxList.ForEach(pb => pb.Refresh());
+        }
+
+        private void checkEndGame()
+        {
+            if (game.Player1.SquareList.Count + game.Player2.SquareList.Count == 9)
             {
+                refreshPictureBoxes();
                 game.GameOver = true;
                 pictureBoxList.ForEach(pb => pb.Enabled = false);
                 game.playGame();
@@ -162,6 +179,7 @@ namespace TicTacToe
             game = new Game();
             game.playerTurn = true;
             pictureBoxList.ForEach(pb => pb.ImageLocation = "");
+            refreshPictureBoxes();
             pictureBoxList.ForEach(pb => pb.Enabled = true);
             intList.Clear();
             resultLabel.Text = "";
