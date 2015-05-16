@@ -118,7 +118,7 @@ namespace TicTacToe
                 if (intList.Contains(game.Box))
                 {
 
-                    for (int i = 0; i < 8; i++)
+                    for (int i = 0; i < 9; i++)
                     {
                         if (!intList.Contains(i))
                         {
